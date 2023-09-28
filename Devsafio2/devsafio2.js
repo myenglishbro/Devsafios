@@ -1,23 +1,21 @@
-const fs=require("fs")
+const fs= require ("fs")
 
 class ProductManager{
 
     constructor(path){
+        this.path=path,
      this.products=[]
-     this.path=path
     }
 
-   //READ
-   getProducts=async()=>{
-    const productlist= await fs.promises.readFile(this.path,"utf-8")
-    const productlistparse=JSON.parse(productlist)
-    return productlistparse
+    async getProducts(){
+     const listadeproductos=await fs.promises.readFile(this.path,"utf-8")
+     const listadoproductosParse=JSON.parse(listadeproductos)
+     return listadoproductosParse
     }
 
-    //GENERATE ID 
-    generateId=async()=>{
-        const counter=this.products.length
-        if(counter==0){
+    generateIds=async()=>{
+        const counter = this.products.length
+        if(counter===0){
             return 1
         }
         else{
@@ -25,30 +23,39 @@ class ProductManager{
         }
     }
 
-    //CREATE
-    addProduct=async(title,description,price,thumbnail,code,stock)=>{
-        if(!title || !description || !price || !thumbnail|| !code||!stock){
-          console.error("INGRESE TODOS LOS DATOS DEL PRODUCTO")
-          return 
+    addProduct=async(title, description, price,thumbnail,code,stock)=>{
+    
+        if(!title || !description || !price || !thumbnail || !code || !stock){
+            console.error("Ingrese todos los datos del product")
+            return
         }
         else{
-          const codigorepetido=this.products.find(elemento=>elemento.code===code)
-          if(codigorepetido){
-               console.error("EL CODIGO DEL PRODUCTO QUE DESEA AGREGAR ES REPETIDO")
-               return
-          }
-          else{
-              const id=await this.generateId()
-              const productnew={
-                  id,title,description,price,thumbnail,code,stock
-              }
-              this.products.push(productnew)
-              await fs.promises.writeFile(this.path,JSON.stringify(this.products,null,2))
-          }
+        const productfiltrado= this.products.find(element=>element.code==code)  
+        const id= await this.generateIds();
+           if (!productfiltrado){
+            const newproduct={
+                  id,
+                 title,
+                 description,
+                  price,
+                  thumbnail,
+                  code,
+                  stock
+            }
+             this.products.push(newproduct)
+             await fs.promises.writeFile(this.path, JSON.stringify(this.products,null,2))
+           }
+
+           else{
+            console.error("El codigo del producto ya existe")
+           }
+        
         }
-      }
-  //UPDATE
-  updateProduct=async(id,title,description,price,thumbnail,code,stock)=>{
+  
+    }
+
+ //UPDATE
+ updateProduct=async(id,title,description,price,thumbnail,code,stock)=>{
     if(!id|| !title || !description || !price || !thumbnail|| !code||!stock){
       console.error("INGRESE TODOS LOS DATOS DEL PRODUCTO PARA SU ACTUALIZACION")
       return 
@@ -80,35 +87,36 @@ class ProductManager{
     }
   }
 
-    //DELETE
-    deleteProduct=async(id)=>{
-        const allproducts=await this.getProducts()
-        const productswithoutfound=allproducts.filter(elemento=>elemento.id!==id)
-       await fs.promises.writeFile(this.path,JSON.stringify(productswithoutfound,null,2))
-      }
-    getProductbyId=async(id)=>{
-        const allproducts=await this.getProducts()
-       const found=allproducts.find(element=>element.id===id)
-       return found
-    }
+
+  //DELETE
+  deleteProduct=async(id)=>{
+    const allproducts=await this.getProducts()
+    const productswithoutfound=allproducts.filter(elemento=>elemento.id!==id)
+   await fs.promises.writeFile(this.path,JSON.stringify(productswithoutfound,null,2))
+  }
+getProductbyId=async(id)=>{
+    const allproducts=await this.getProducts()
+   const found=allproducts.find(element=>element.id===id)
+   return found
+}
+
 
 
 }
 
 
+const ejecutar =async()=>{
+    const productmanager = new ProductManager("./files/products.json");
+    // await productmanager.addProduct("product1","description1",12,"url","code1",500)
+    // await productmanager.addProduct("product2","description2",13,"url","code2",600)
+    // await productmanager.addProduct("product3","description3",16,"url","code3",600)
+    // await productmanager.addProduct("product4","description4",19,"url","code4",700)
+    // await  productmanager.addProduct("product5","description5",29,"url","code5",700)
+    // await productmanager.addProduct("product6","description6",22,"url","code6",700)
+    const listado=await productmanager.getProducts()
+    console.log(listado)
+}
+ejecutar()
 
-async function generator(){
-    
-    const productmanager=new ProductManager("./files/products.json");
-    await productmanager.addProduct("product1","description1",1500,"url","abc123",500)
-    await productmanager.addProduct("product2","description2",1500,"url","abc122",500)
-    await productmanager.addProduct("product3","description2",1500,"url","abc125",500)
-    await productmanager.updateProduct(3,"nuevo","xxxxxx",1500,"url","abc126",500)
-    //await productmanager.deleteProduct(2)
-    // const solo=await productmanager.getProductbyId(1)
-    
-    //  const listado=await productmanager.getProducts()
-    //  console.log(solo)
-    }
-    
-    generator()
+// console.log(productmanager.getProducts())
+// console.log(productmanager.getProdudctById(2))
