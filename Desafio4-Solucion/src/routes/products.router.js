@@ -1,8 +1,8 @@
 import {Router} from "express"
-import ProductManager from "../managers/productManager.js"
+import ProductManager from "../controllers/productManager.js"
 import { __dirname } from "../utils.js"
 
-const manager=new ProductManager(__dirname+'/files/products.json')
+const manager=new ProductManager(__dirname+'/database/products.json')
 const router =Router()
 
 router.get("/products",async(req,res)=>{
@@ -29,7 +29,8 @@ router.get("/products/:pid", async (req, res) => {
 
   
   router.delete("/products/:pid", async (req, res) => {
-    const deleteproduct = await manager.deleteProduct(req.params);
+    const id=parseInt(req.params.pid)
+    const deleteproduct = await manager.deleteProduct(id);
      res.json({ status: "success",deleteproduct });
   });
 
