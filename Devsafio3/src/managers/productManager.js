@@ -7,28 +7,50 @@ export default class ProductManager{
      this.products=[]
     }
 
-    async getProducts(objeto){
-     const {limit}=objeto
-     try{
-        if (fs.existsSync(this.path)) {
+  //READ
+  getProducts = async (objectquery) => {
+    const { limit } = objectquery;
+    try {
+     
+
+      if (fs.existsSync(this.path)) {
       
-            const productlist = await fs.promises.readFile(this.path, "utf-8");
-            const productlistJs = JSON.parse(productlist);
-            if (limit) {
-              const limitProducts = productlistJs.slice(0, parseInt(limit));
-              return limitProducts;
-            } else {
-              return productlistJs;
-            }
-          } else {
-            return [];
-          }
-     }
-     catch (error) {
-        console.error("Error while getting products:", error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        const productlist = await fs.promises.readFile(this.path, "utf-8");
+        const productlistJs = JSON.parse(productlist);
+        if (limit) {
+          const limitProducts = productlistJs.slice(0, parseInt(limit));
+          return limitProducts;
+        } else {
+          return productlistJs;
+        }
+      } else {
+        return [];
+      }
+    } catch (error) {
+      throw new Error(error);
     }
+  };
+
+  getProductbyId = async (objectparams) => {
+    const {pid}=objectparams
+    try {
+      
+      if (fs.existsSync(this.path)) {
+        const allproducts = await this.getProducts({});
+        const found = allproducts.find((element) => element.id === parseInt(pid));
+        if (found) {
+          return found;
+        } else {
+          throw new Error("Producto no existe");
+        }
+      } else {
+        throw new Error("Product file not found");
+      }
+    } catch (error) {
+      throw new Error(error);
     }
+  };
+  
 
     async generateIds() {
         try {
@@ -138,18 +160,7 @@ export default class ProductManager{
     throw error; // Re-throw the error to handle it at a higher level if needed
 }
   }
-getProductbyId=async(object)=>{
-    const {id}=object
-   try{
-    const allproducts=await this.getProducts()
-    const found=allproducts.find(element=>element.id===parseInt(id))
-    return found
-   }
-   catch (error) {
-    console.error("Error while Gtting the product:", error);
-    throw error; // Re-throw the error to handle it at a higher level if needed
-}
-}
+
 
 
 
