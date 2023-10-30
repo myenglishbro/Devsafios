@@ -1,11 +1,8 @@
-const socketClient=io()
+const socketClient = io();
 const nombreUsuario=document.getElementById("nombreusuario")
 const formulario=document.getElementById("formulario")
 const inputmensaje=document.getElementById("mensaje")
 const chat=document.getElementById("chat")
-
-
-
 
 let usuario=null
 
@@ -23,33 +20,51 @@ if(!usuario){
     .then(username=>{
         usuario=username.value
         nombreUsuario.innerHTML=usuario
-        socketClient.emit("nuevousuario",usuario)
+        socketClient.emit("nuevousuario",usuario)        
     })
 }
-
+function scrollToBottom() {
+    const chatContainer = document.getElementById("chat-messages");
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    
+}
 
 formulario.onsubmit=(e)=>{
     e.preventDefault()
     const info={
         user:usuario,
-        message:inputmensaje.value
+        message:inputmensaje.value,
     }
-    console.log(info)
+   
     socketClient.emit("mensaje",info)
     inputmensaje.value=" "
+   scrollToBottom()
 
 }
+socketClient.on("chat2", mensajes => {
 
-socketClient.on("chat", mensaje => {
-    const chatRender = mensaje.map(e => {
-        const formattedTime = new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        return `<p><strong>${e.user}</strong> (${formattedTime}): ${e.message}</p>`;
+    const chatRender = mensajes.map(mensaje => {
+        const fechaCreacion = new Date(mensaje.createdAt);
+        const opcionesHora = { hour: '2-digit', minute: '2-digit'};
+        const horaFormateada = fechaCreacion.toLocaleTimeString(undefined, opcionesHora);
+        return `<p class="message-container"><strong>${horaFormateada}</strong> - <strong>${mensaje.user}</strong>: ${mensaje.message}</p>`;
+    }).join("");
+    chat.innerHTML = chatRender;
+});
+
+socketClient.on("chat", mensajes => {
+
+    const chatRender = mensajes.map(mensaje => {
+        const fechaCreacion = new Date(mensaje.createdAt);
+        const opcionesHora = { hour: '2-digit', minute: '2-digit'};
+        const horaFormateada = fechaCreacion.toLocaleTimeString(undefined, opcionesHora);
+        return `<p class="message-container"><strong>${horaFormateada}</strong> - <strong>${mensaje.user}</strong>: ${mensaje.message}</p>`;
     }).join("");
     chat.innerHTML = chatRender;
 });
 
 
- socketClient.on("broadcast",usuario=>{
+socketClient.on("broadcast",usuario=>{
     Toastify({
         text:`Ingreso ${usuario} al chat`,
         duration:5000,
@@ -60,11 +75,14 @@ socketClient.on("chat", mensaje => {
     }).showToast()
  })
 
+
+ 
  // Manejo del clic en el botón "Vaciar Chat"
-document.getElementById("clearChat").addEventListener("click", () => {
+ document.getElementById("clearChat").addEventListener("click", () => {
     // Borrar el contenido del chat en el cliente
     document.getElementById("chat").textContent = "";
     
     // Emitir el evento "clearchat" al servidor usando socketClient
     socketClient.emit("clearchat");
 });
+
