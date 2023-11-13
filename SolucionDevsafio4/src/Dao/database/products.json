@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "Nike 300 ",
+    "description": "Ultimo modelo 2023",
+    "price": "600",
+    "category": "zapatillas",
+    "status": true,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "Nike102",
+    "stock": "10"
+  }
+]
