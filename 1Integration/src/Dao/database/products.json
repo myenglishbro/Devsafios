@@ -1,0 +1,46 @@
+[
+  {
+    "id": 2,
+    "title": "asd",
+    "description": "asd",
+    "price": "2323",
+    "category": "zapatillas",
+    "status": true,
+    "thumbnail": "https://i.ibb.co/nngfHbZ/puma.png|",
+    "code": "asdsadasdsa",
+    "stock": "222"
+  },
+  {
+    "id": 3,
+    "title": "asdasdasd",
+    "description": "asdasdas",
+    "price": "23232",
+    "category": "zapatillas",
+    "status": true,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "asdasdasdasd",
+    "stock": "222"
+  },
+  {
+    "id": 4,
+    "title": "ZAPATILLAS NIKE",
+    "description": "MODELO NUEVO ",
+    "price": "522",
+    "category": "zapatillas",
+    "status": true,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "NK123",
+    "stock": "3"
+  },
+  {
+    "id": 5,
+    "title": "sadasdas",
+    "description": "asdasd",
+    "price": "45454",
+    "category": "zapatillas",
+    "status": true,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "dsfasf2",
+    "stock": "123213"
+  }
+]
