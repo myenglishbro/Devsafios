@@ -7,7 +7,7 @@ socketClient.on("enviodeproducts",(obj)=>{
 
 
 function updateProductList(products) {
-    let div = document.getElementById("contenedor");
+    let div = document.getElementById("products");
     let productos = "";
   
     products.forEach((product) => {

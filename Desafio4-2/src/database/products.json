@@ -1,0 +1,40 @@
+[
+  {
+    "id": 8,
+    "title": "product4",
+    "description": "description1",
+    "price": 1500,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "abc1asd33328",
+    "stock": 500
+  },
+  {
+    "id": 10,
+    "title": "product6",
+    "description": "description1",
+    "price": 1500,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "abcdddd128",
+    "stock": 500
+  },
+  {
+    "id": 12,
+    "title": "newproductossss7",
+    "description": "dessscriptionnew12",
+    "price": 330,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "codenw2222q",
+    "stock": 20
+  },
+  {
+    "id": 13,
+    "title": "sdsds",
+    "description": "asdasd",
+    "price": "23232",
+    "category": "zapatillas",
+    "status": true,
+    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
+    "code": "sd222",
+    "stock": "213"
+  }
+]

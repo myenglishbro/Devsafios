@@ -1,13 +1,13 @@
 [
   {
-    "id": 1,
-    "title": "Nike 300 ",
-    "description": "Ultimo modelo 2023",
-    "price": "600",
+    "id": 2,
+    "title": "zaptilal puma",
+    "description": "zapatilla",
+    "price": "500",
     "category": "zapatillas",
     "status": true,
-    "thumbnail": "https://i.ibb.co/4fY5bvZ/z4.png",
-    "code": "Nike102",
-    "stock": "10"
+    "thumbnail": "https://i.ibb.co/nngfHbZ/puma.png|",
+    "code": "asd",
+    "stock": "2"
   }
 ]

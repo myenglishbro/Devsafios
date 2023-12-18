@@ -9,9 +9,11 @@ import socketProducts from "./listeners/socketproducts.js";
 
 import connectToDB from "./Dao/config/configServer.js";
 import socketChat from "./listeners/socketChat.js";
+import routerC from "./routes/carts.router.js";
 const app = express()
 const PORT=3000
-app.use(express.json())
+// Middleware para analizar el cuerpo JSON de la solicitud
+app.use(express.json());
 app.use(express.static(__dirname + "/public"))
 //handlebars
 app.engine("handlebars",handlebars.engine())
@@ -20,7 +22,7 @@ app.set("view engine","handlebars")
 //rutas
 app.use("/api",routerP)
 app.use('/', routerV);
-
+app.use("/api",routerC)
 connectToDB()
 const httpServer=app.listen(PORT, () => {
     try {
